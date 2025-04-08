@@ -4,367 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人中心 - 手机商城</title>
-    <style>
-        body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0; 
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 设置 Tailwind 主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#e4393c',
+                            dark: '#d12b2b',
+                            light: '#fff0f0',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Microsoft YaHei', 'sans-serif'],
+                    },
+                },
+            },
         }
-        /* 页面顶部导航条 */
-        .top-bar {
-            background: #333;
-            color: #ccc;
-            font-size: 12px;
-            height: 30px;
-            line-height: 30px;
-        }
-        .top-bar-content {
-            width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-        }
-        .top-bar a {
-            color: #ccc;
-            text-decoration: none;
-            margin-left: 10px;
-        }
-        .top-bar a:hover {
-            color: #fff;
-        }
-
-        /* 主导航栏 */
-        .header {
-            background: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .header-content {
-            width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #e4393c;
-        }
-        .search-box {
-            display: flex;
-            width: 500px;
-        }
-        .search-box input {
-            width: 400px;
-            padding: 10px 15px;
-            border: 2px solid #e4393c;
-            border-radius: 4px 0 0 4px;
-            font-size: 14px;
-        }
-        .search-box button {
-            width: 100px;
-            background: #e4393c;
-            color: white;
-            border: none;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-        }
-        .cart-button {
-            display: flex;
-            align-items: center;
-            background: #f5f5f5;
-            padding: 8px 15px;
-            border-radius: 4px;
-            margin-left: 20px;
-            text-decoration: none;
-            color: #333;
-        }
-        .cart-button:hover {
-            background: #eee;
-        }
-        .cart-button .cart-icon {
-            margin-right: 5px;
-        }
-
-        /* 内容区域 */
-        .container {
-            width: 1200px;
-            margin: 20px auto;
-            display: flex;
-            gap: 20px;
-        }
-        
-        /* 侧边栏 */
-        .sidebar {
-            width: 200px;
-            background: white;
-            border-radius: 4px;
-            padding: 15px 0;
-        }
-        .sidebar-title {
-            font-size: 16px;
-            font-weight: bold;
-            padding: 0 15px 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
-        }
-        .sidebar-menu li {
-            padding: 12px 15px;
-        }
-        .sidebar-menu li.active {
-            background: #fff0f0;
-        }
-        .sidebar-menu a {
-            text-decoration: none;
-            color: #333;
-            display: block;
-        }
-        .sidebar-menu li.active a {
-            color: #e4393c;
-            font-weight: bold;
-        }
-        
-        /* 主内容区 */
-        .main-content {
-            flex: 1;
-        }
-        .page-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        /* 用户信息卡片 */
-        .user-info-card {
-            background: white;
-            border-radius: 4px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #f9f9f9;
-            margin-right: 20px;
-            overflow: hidden;
-        }
-        .user-name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        .user-level {
-            font-size: 14px;
-            color: #999;
-        }
-        .user-stats {
-            display: flex;
-            margin-top: 20px;
-        }
-        .stat-item {
-            flex: 1;
-            text-align: center;
-            padding: 15px;
-            border-right: 1px solid #eee;
-        }
-        .stat-item:last-child {
-            border-right: none;
-        }
-        .stat-item .num {
-            font-size: 24px;
-            color: #e4393c;
-            font-weight: bold;
-        }
-        .stat-item .text {
-            font-size: 14px;
-            color: #999;
-            margin-top: 5px;
-        }
-        
-        /* 快捷功能区 */
-        .quick-links-card {
-            background: white;
-            border-radius: 4px;
-            padding: 20px;
-        }
-        .section-title {
-            font-size: 16px;
-            font-weight: bold;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        .link-item {
-            text-align: center;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .link-item:hover {
-            background: #f0f0f0;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .link-item .icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #e4393c;
-        }
-        .link-item .link-text {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        /* 订单概览区 */
-        .orders-overview {
-            background: white;
-            border-radius: 4px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .order-status-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        .status-item {
-            flex: 1;
-            text-align: center;
-            padding: 15px 0;
-            position: relative;
-            cursor: pointer;
-        }
-        .status-item:hover .icon {
-            color: #e4393c;
-        }
-        .status-item .icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-            color: #666;
-        }
-        .status-item .status-text {
-            font-size: 14px;
-            color: #666;
-        }
-        .status-item .badge {
-            position: absolute;
-            top: 5px;
-            right: 50%;
-            margin-right: -25px;
-            background: #e4393c;
-            color: white;
-            font-size: 12px;
-            border-radius: 10px;
-            padding: 0 6px;
-            min-width: 16px;
-            height: 16px;
-            line-height: 16px;
-            text-align: center;
-        }
-        
-        /* 页脚 */
-        .footer {
-            background: #333;
-            color: #999;
-            padding: 40px 0 20px;
-            margin-top: 30px;
-        }
-        .footer-content {
-            width: 1200px;
-            margin: 0 auto;
-            display: flex;
-        }
-        .footer-column {
-            flex: 1;
-            padding: 0 20px;
-        }
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #444;
-        }
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-column li {
-            margin-bottom: 10px;
-        }
-        .footer-column a {
-            color: #999;
-            text-decoration: none;
-        }
-        .footer-column a:hover {
-            color: #e4393c;
-        }
-        .copyright {
-            width: 1200px;
-            margin: 30px auto 0;
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 12px;
-        }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans text-gray-800">
     <!-- 顶部导航条 -->
-    <div class="top-bar">
-        <div class="top-bar-content">
-            <div class="left">
+    <div class="bg-gray-800 text-gray-300 text-xs">
+        <div class="container mx-auto px-4 h-8 flex items-center justify-between">
+            <div>
                 <span>您好，欢迎来到手机商城！</span>
-                <a href="login.html">请登录</a>
-                <a href="register.html">免费注册</a>
+                <a href="login.html" class="ml-2 hover:text-white">请登录</a>
+                <a href="register.html" class="ml-2 hover:text-white">免费注册</a>
             </div>
-            <div class="right">
-                <a href="user_center.html">个人中心</a>
-                <a href="orders.html">我的订单</a>
-                <a href="favorites.html">我的收藏</a>
-                <a href="help.html">帮助中心</a>
-                <a href="contact.html">联系我们</a>
+            <div>
+                <a href="user_center.html" class="ml-4 hover:text-white">个人中心</a>
+                <a href="orders.html" class="ml-4 hover:text-white">我的订单</a>
+                <a href="favorites.html" class="ml-4 hover:text-white">我的收藏</a>
+                <a href="help.html" class="ml-4 hover:text-white">帮助中心</a>
+                <a href="contact.html" class="ml-4 hover:text-white">联系我们</a>
             </div>
         </div>
     </div>
     
     <!-- 主导航栏 -->
-    <div class="header">
-        <div class="header-content">
-            <div class="logo">手机商城</div>
-            <div class="search-box">
-                <input type="text" placeholder="搜索手机、配件等">
-                <button>搜索</button>
+    <div class="bg-white shadow">
+        <div class="container mx-auto px-4 py-5 flex justify-between items-center">
+            <div class="text-2xl font-bold text-primary">手机商城</div>
+            <div class="flex-1 max-w-xl mx-10">
+                <div class="relative w-full">
+                    <input 
+                        type="text" 
+                        placeholder="搜索手机、配件等" 
+                        class="w-full py-2 px-4 border-2 border-primary rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
+                    >
+                    <button class="absolute right-0 top-0 h-full bg-primary text-white px-5 rounded-r-md hover:bg-primary-dark transition-colors">
+                        搜索
+                    </button>
+                </div>
             </div>
-            <div class="header-right">
-                <a href="cart.html" class="cart-button">
-                    <span class="cart-icon">🛒</span>
+            <div>
+                <a href="cart.html" class="flex items-center bg-gray-100 px-4 py-2 rounded hover:bg-gray-200 transition-colors">
+                    <span class="mr-2">🛒</span>
                     购物车(3)
                 </a>
             </div>
@@ -372,126 +71,189 @@
     </div>
     
     <!-- 内容区域 -->
-    <div class="container">
+    <div class="container mx-auto px-4 py-5 flex gap-5">
         <!-- 侧边栏 -->
-        <div class="sidebar">
-            <div class="sidebar-title">个人中心</div>
-            <ul class="sidebar-menu">
-                <li class="active"><a href="user_center.html">账户总览</a></li>
-                <li><a href="orders.html">我的订单</a></li>
-                <li><a href="address.html">收货地址</a></li>
-                <li><a href="favorites.html">我的收藏</a></li>
-                <li><a href="coupons.html">优惠券</a></li>
-                <li><a href="account_settings.html">账户设置</a></li>
-                <li><a href="message.html">消息中心</a></li>
-                <li><a href="after_sales.html">售后服务</a></li>
+        <div class="w-48 bg-white rounded-md overflow-hidden">
+            <div class="px-4 py-3 font-bold border-b border-gray-100">
+                个人中心
+            </div>
+            <ul>
+                <li class="bg-primary-light">
+                    <a href="user_center.html" class="block px-4 py-3 text-primary font-bold">账户总览</a>
+                </li>
+                <li>
+                    <a href="orders.html" class="block px-4 py-3 hover:bg-gray-50">我的订单</a>
+                </li>
+                <li>
+                    <a href="address.html" class="block px-4 py-3 hover:bg-gray-50">收货地址</a>
+                </li>
+                <li>
+                    <a href="favorites.html" class="block px-4 py-3 hover:bg-gray-50">我的收藏</a>
+                </li>
+                <li>
+                    <a href="coupons.html" class="block px-4 py-3 hover:bg-gray-50">优惠券</a>
+                </li>
+                <li>
+                    <a href="account_settings.html" class="block px-4 py-3 hover:bg-gray-50">账户设置</a>
+                </li>
+                <li>
+                    <a href="message.html" class="block px-4 py-3 hover:bg-gray-50">消息中心</a>
+                </li>
+                <li>
+                    <a href="after_sales.html" class="block px-4 py-3 hover:bg-gray-50">售后服务</a>
+                </li>
             </ul>
         </div>
         
         <!-- 主内容区 -->
-        <div class="main-content">
-            <div class="page-title">账户总览</div>
+        <div class="flex-1">
+            <h2 class="text-xl font-bold mb-5">账户总览</h2>
             
             <!-- 用户信息卡片 -->
-            <div class="user-info-card">
-                <div class="user-info">
-                    <div class="avatar"></div>
+            <div class="bg-white rounded-md p-5 mb-5">
+                <div class="flex items-center pb-5 border-b border-gray-100">
+                    <div class="w-20 h-20 rounded-full overflow-hidden mr-5 bg-gray-50">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=160&q=80" alt="用户头像" class="w-full h-full object-cover">
+                    </div>
                     <div>
-                        <div class="user-name">张先生</div>
-                        <div class="user-level">普通会员</div>
+                        <div class="text-lg font-bold">张先生</div>
+                        <div class="text-gray-500 text-sm">普通会员</div>
                     </div>
                 </div>
                 
-                <div class="user-stats">
-                    <div class="stat-item">
-                        <div class="num">12</div>
-                        <div class="text">我的订单</div>
+                <div class="flex mt-5">
+                    <div class="flex-1 text-center py-4 border-r border-gray-100">
+                        <div class="text-2xl font-bold text-primary">12</div>
+                        <div class="text-gray-500 text-sm mt-1">我的订单</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="num">3</div>
-                        <div class="text">购物车</div>
+                    <div class="flex-1 text-center py-4 border-r border-gray-100">
+                        <div class="text-2xl font-bold text-primary">3</div>
+                        <div class="text-gray-500 text-sm mt-1">购物车</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="num">25</div>
-                        <div class="text">收藏夹</div>
+                    <div class="flex-1 text-center py-4 border-r border-gray-100">
+                        <div class="text-2xl font-bold text-primary">25</div>
+                        <div class="text-gray-500 text-sm mt-1">收藏夹</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="num">5</div>
-                        <div class="text">优惠券</div>
+                    <div class="flex-1 text-center py-4">
+                        <div class="text-2xl font-bold text-primary">5</div>
+                        <div class="text-gray-500 text-sm mt-1">优惠券</div>
                     </div>
                 </div>
             </div>
             
             <!-- 订单概览区域 -->
-            <div class="orders-overview">
-                <div class="section-title">我的订单</div>
-                <div class="order-status-nav">
-                    <div class="status-item">
-                        <div class="icon">📋</div>
-                        <div class="status-text">全部订单</div>
+            <div class="bg-white rounded-md p-5 mb-5">
+                <div class="text-lg font-bold pb-4 border-b border-gray-100">我的订单</div>
+                <div class="flex justify-between mt-4">
+                    <div class="flex-1 text-center py-4 relative cursor-pointer hover:text-primary">
+                        <div class="text-2xl mb-2">📋</div>
+                        <div class="text-sm">全部订单</div>
                     </div>
-                    <div class="status-item">
-                        <div class="icon">💰</div>
-                        <div class="status-text">待付款</div>
-                        <span class="badge">2</span>
+                    <div class="flex-1 text-center py-4 relative cursor-pointer hover:text-primary">
+                        <div class="text-2xl mb-2">💰</div>
+                        <div class="text-sm">待付款</div>
+                        <span class="absolute top-2 right-1/2 translate-x-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
                     </div>
-                    <div class="status-item">
-                        <div class="icon">📦</div>
-                        <div class="status-text">待发货</div>
-                        <span class="badge">1</span>
+                    <div class="flex-1 text-center py-4 relative cursor-pointer hover:text-primary">
+                        <div class="text-2xl mb-2">📦</div>
+                        <div class="text-sm">待发货</div>
+                        <span class="absolute top-2 right-1/2 translate-x-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">1</span>
                     </div>
-                    <div class="status-item">
-                        <div class="icon">🚚</div>
-                        <div class="status-text">待收货</div>
-                        <span class="badge">3</span>
+                    <div class="flex-1 text-center py-4 relative cursor-pointer hover:text-primary">
+                        <div class="text-2xl mb-2">🚚</div>
+                        <div class="text-sm">待收货</div>
+                        <span class="absolute top-2 right-1/2 translate-x-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
                     </div>
-                    <div class="status-item">
-                        <div class="icon">⭐</div>
-                        <div class="status-text">待评价</div>
-                        <span class="badge">5</span>
+                    <div class="flex-1 text-center py-4 relative cursor-pointer hover:text-primary">
+                        <div class="text-2xl mb-2">⭐</div>
+                        <div class="text-sm">待评价</div>
+                        <span class="absolute top-2 right-1/2 translate-x-4 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">5</span>
                     </div>
-                    <div class="status-item">
-                        <div class="icon">🔄</div>
-                        <div class="status-text">退款/售后</div>
+                    <div class="flex-1 text-center py-4 relative cursor-pointer hover:text-primary">
+                        <div class="text-2xl mb-2">🔄</div>
+                        <div class="text-sm">退款/售后</div>
                     </div>
                 </div>
             </div>
             
             <!-- 快捷功能区 -->
-            <div class="quick-links-card">
-                <div class="section-title">常用功能</div>
-                <div class="links-grid">
-                    <div class="link-item">
-                        <div class="icon">📍</div>
-                        <div class="link-text">收货地址</div>
+            <div class="bg-white rounded-md p-5">
+                <div class="text-lg font-bold pb-4 border-b border-gray-100">常用功能</div>
+                <div class="grid grid-cols-4 gap-4 mt-5">
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">📍</div>
+                        <div class="text-sm text-gray-600">收货地址</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">❤️</div>
-                        <div class="link-text">我的收藏</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">❤️</div>
+                        <div class="text-sm text-gray-600">我的收藏</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">🛒</div>
-                        <div class="link-text">购物车</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">🛒</div>
+                        <div class="text-sm text-gray-600">购物车</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">🎟️</div>
-                        <div class="link-text">优惠券</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">🎟️</div>
+                        <div class="text-sm text-gray-600">优惠券</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">🔔</div>
-                        <div class="link-text">消息通知</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">🔔</div>
+                        <div class="text-sm text-gray-600">消息通知</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">🔄</div>
-                        <div class="link-text">售后服务</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">🔄</div>
+                        <div class="text-sm text-gray-600">售后服务</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">💰</div>
-                        <div class="link-text">我的资产</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">💰</div>
+                        <div class="text-sm text-gray-600">我的资产</div>
                     </div>
-                    <div class="link-item">
-                        <div class="icon">⚙️</div>
-                        <div class="link-text">账户设置</div>
+                    <div class="bg-gray-50 rounded-md p-4 text-center cursor-pointer hover:shadow-md hover:-translate-y-1 transition-all">
+                        <div class="text-2xl text-primary mb-2">⚙️</div>
+                        <div class="text-sm text-gray-600">账户设置</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近浏览区域 -->
+            <div class="bg-white rounded-md p-5 mt-5">
+                <div class="text-lg font-bold pb-4 border-b border-gray-100">最近浏览</div>
+                <div class="grid grid-cols-4 gap-4 mt-5">
+                    <div class="bg-white rounded-md overflow-hidden shadow hover:shadow-md transition-shadow">
+                        <div class="h-40 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1550029402-8ea9f5019cc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="手机" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <div class="text-sm line-clamp-2 h-10">华为Mate60 Pro 512GB 曜金黑 5G双卡双待</div>
+                            <div class="text-primary font-bold mt-2">¥8599</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md overflow-hidden shadow hover:shadow-md transition-shadow">
+                        <div class="h-40 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="手机" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <div class="text-sm line-clamp-2 h-10">iPhone 15 Pro Max 256GB 深空黑 5G双卡双待</div>
+                            <div class="text-primary font-bold mt-2">¥9999</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md overflow-hidden shadow hover:shadow-md transition-shadow">
+                        <div class="h-40 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="手机" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <div class="text-sm line-clamp-2 h-10">小米14 Ultra 1TB 陶瓷白 5G双卡双待</div>
+                            <div class="text-primary font-bold mt-2">¥7999</div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-md overflow-hidden shadow hover:shadow-md transition-shadow">
+                        <div class="h-40 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1560672265-2e85cae8e053?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80" alt="充电器" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-3">
+                            <div class="text-sm line-clamp-2 h-10">华为原装65W充电器 超级快充 手机平板通用</div>
+                            <div class="text-primary font-bold mt-2">¥199</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -499,55 +261,55 @@
     </div>
     
     <!-- 页脚 -->
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>购物指南</h4>
-                <ul>
-                    <li><a href="#">购物流程</a></li>
-                    <li><a href="#">会员介绍</a></li>
-                    <li><a href="#">常见问题</a></li>
-                    <li><a href="#">联系客服</a></li>
+    <div class="bg-gray-800 text-gray-400 py-10 mt-8">
+        <div class="container mx-auto px-4 flex">
+            <div class="flex-1 px-4">
+                <h4 class="text-white font-bold mb-4 pb-2 border-b border-gray-700">购物指南</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-primary">购物流程</a></li>
+                    <li><a href="#" class="hover:text-primary">会员介绍</a></li>
+                    <li><a href="#" class="hover:text-primary">常见问题</a></li>
+                    <li><a href="#" class="hover:text-primary">联系客服</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>配送方式</h4>
-                <ul>
-                    <li><a href="#">上门自提</a></li>
-                    <li><a href="#">211限时达</a></li>
-                    <li><a href="#">配送服务查询</a></li>
-                    <li><a href="#">配送费收取标准</a></li>
+            <div class="flex-1 px-4">
+                <h4 class="text-white font-bold mb-4 pb-2 border-b border-gray-700">配送方式</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-primary">上门自提</a></li>
+                    <li><a href="#" class="hover:text-primary">211限时达</a></li>
+                    <li><a href="#" class="hover:text-primary">配送服务查询</a></li>
+                    <li><a href="#" class="hover:text-primary">配送费收取标准</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>支付方式</h4>
-                <ul>
-                    <li><a href="#">货到付款</a></li>
-                    <li><a href="#">在线支付</a></li>
-                    <li><a href="#">分期付款</a></li>
-                    <li><a href="#">公司转账</a></li>
+            <div class="flex-1 px-4">
+                <h4 class="text-white font-bold mb-4 pb-2 border-b border-gray-700">支付方式</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-primary">货到付款</a></li>
+                    <li><a href="#" class="hover:text-primary">在线支付</a></li>
+                    <li><a href="#" class="hover:text-primary">分期付款</a></li>
+                    <li><a href="#" class="hover:text-primary">公司转账</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>售后服务</h4>
-                <ul>
-                    <li><a href="#">售后政策</a></li>
-                    <li><a href="#">价格保护</a></li>
-                    <li><a href="#">退款说明</a></li>
-                    <li><a href="#">返修/退换货</a></li>
+            <div class="flex-1 px-4">
+                <h4 class="text-white font-bold mb-4 pb-2 border-b border-gray-700">售后服务</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-primary">售后政策</a></li>
+                    <li><a href="#" class="hover:text-primary">价格保护</a></li>
+                    <li><a href="#" class="hover:text-primary">退款说明</a></li>
+                    <li><a href="#" class="hover:text-primary">返修/退换货</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>关于我们</h4>
-                <ul>
-                    <li><a href="#">公司简介</a></li>
-                    <li><a href="#">企业文化</a></li>
-                    <li><a href="#">联系我们</a></li>
-                    <li><a href="#">诚聘英才</a></li>
+            <div class="flex-1 px-4">
+                <h4 class="text-white font-bold mb-4 pb-2 border-b border-gray-700">关于我们</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-primary">公司简介</a></li>
+                    <li><a href="#" class="hover:text-primary">企业文化</a></li>
+                    <li><a href="#" class="hover:text-primary">联系我们</a></li>
+                    <li><a href="#" class="hover:text-primary">诚聘英才</a></li>
                 </ul>
             </div>
         </div>
-        <div class="copyright">
+        <div class="container mx-auto px-4 text-center text-xs mt-8 pt-5 border-t border-gray-700">
             © 2023 手机商城 版权所有  |  ICP备案号: 粤ICP备xxxxxxxx号
         </div>
     </div>
